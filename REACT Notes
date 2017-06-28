@@ -1,0 +1,130 @@
+REACT NOTES
+
+What is react? React is a JS library that is used to produce HTML shown in a browser
+Components = views they are interchangeable
+They are snippets of code that produce HTML.
+
+We nest components together to make complex applications simple. 
+We are writing JS, but it will produce HTML.
+
+-----------------------
+Definitions:
+const -- const is an ES6 (2016) piece of syntax.
+const declares a variable, but we are saying this is the final version and is never going to 
+change. "App" is never going to be reassigned further down in the code.
+
+JSX - a subset or dialect of JS that allows us to write what looks like HTML, but behind the
+scenes, it's really JavaScript. Webpack or Babel will do some transpiling to convert for browser.
+The browser cannot understand JSX. We use JSX to allow us to produce JavaScript that can be
+converted into HTML.
+
+Index.html is the root of our component.
+Always ONE component PER FILE.
+
+-----------------------
+Importing Modules:
+JavaScript Modules. Modules are isolated/silo'd and separated from each other.
+They need to be imported into JS files in order to use them. 
+To create a react component, these two modules need to be imported at the very least:
+-- import React from 'react'; <-- library that knows how to handle Components
+-- import ReactDOM from 'react-dom'; <-- library that knows how to write to the DOM
+/-- Example:
+  In our components when we use JSX, it needs 'React' in order to render it:
+  const SearchBar = () => {
+    return <input /> // <-- this actually renders React.createElement() in JS 
+  };
+  ^ So React needs to be imported at the top in order for this to work.
+
+-----------------------
+Passing Components to the DOM
+When we make a component, we're making an INSTANCE of the component. We can have many 
+different instances, so it's actually a class we're making. Think of the function as a 
+factory which produces instances of the component. 
+** Need to instantiate (create an instance) of the component before passing it to the DOM.
+
+To instantiate a component: 
+-- When JSX has a comoponent NAME inside, it turns into an INSTANCE.
+-- <App></App> creates an instance of it. (can also write this as <App />)
+/-- Example:
+  ReactDOM.render(App); <-- will not work because App is a class, not an instance.
+  ReactDOM.render(<App />); <-- App is an INSTANCE
+
+Tell ReactDOM WHERE in the DOM to put the instance using this syntax:
+-- ReactDOM.render(instance, dom-element-reference)
+-- The dom-element-reference will be the element you have placed onto the index.html page.
+/-- Example: 
+  ReactDOM.render(<App />, document.querySelector('container'));
+                  This looks for a CLASS ^
+
+-----------------------
+ES6 Function Syntax
+/-- Example:
+  
+  This function...
+  const App = function() { <-- this is a functional component
+    return <div>Hi!</div>;
+  }
+  ...can also be written like this:
+
+  const App = () => { <-- BINDS the content to "this"
+    return <div>Hi!</div>;
+  }
+  
+  Tada!
+  => <-- this is called a fat arrow
+
+A react application is made up of several different components. 
+Components return HTML.
+React can display multiple components on a page at one time and do it quickly.
+Components isolate as much functionality or code as possible. Allows for reuse.
+** Best practice: always one component per file.
+
+-----------------------
+Class Bound Components
+
+Introspective components. Aware of what has happened. Handles greater complexity.
+Classes are nothing like CSS classes. They have properties and methods.
+Classes MUST HAVE a render method/function that returns some JSX.
+/-- Example:
+  class SearchBar extends React.Component { <-- gives the class all the functionality in React.Component.
+    render() { <-- this is a method/function
+      return <input />
+    }
+  }
+
+  class SearchBar extends React.Component <-- can be shortened via in ES6 syntax:
+  ADD this to the top of the file:
+    import React, { Component } from 'react')
+  THEN:
+    class SearchBar extends Component <-- can just use Component now that it's being imported
+
+** Best Practice: Use a Function Component until you need to use a Class-based Component
+
+-----------------------
+Events
+
+Have the ability to know when a user types something into an imput box.
+Handling events has two steps:
+-- Declare an event handler (a function that should run when event occurrs)
+-- Pass event handler to the element we want to monitor for events (such as input element)
+
+** Best Practices for Event names
+-- onInputChange() OR handleInput() (Syntax: onElementEvent)
+-- use the word 'event' to pass as an event: onInputChange(event)
+
+You can tap into using vanilla HTML events.
+/-- Example:
+  <input onChange={this.onInputChange} /> <-- onChange is the HTML event. This allows us to
+  access the element.
+
+  onInputChange(event) <-- often the industry uses the word "event" but it could be anything.
+
+  onInputChange(event) {
+    console.log(event.target.value); <-- event is an object. Can console.log it to find the value
+  }
+
+  Shorten the code by putting the event handler directly into the Component, like so:
+  return <input onChange={(event) => console.log(event.target.value)} />
+
+NOTE:
+-- onChange is a React event. Can see other event types on the website.
